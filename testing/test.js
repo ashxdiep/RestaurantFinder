@@ -1,18 +1,14 @@
-// var apiKey = ;
+var googleAPIkey = "AIzaSyBBEylmL-dj2EJ784FZAvrx677Y3Be19sg";
 
 
-var VAqueryURL ="https://developer.nps.gov/api/v0/parks?parkCode=yell";
+var googleQuearyURL ="https://developer.nps.gov/api/v0/parks?parkCode=yell";
 $("#apiCall").on("click", function() {
   $.ajax({
-    url: VAqueryURL,
+    url: googleQuearyURL,
     method: "GET",
-    headers:{
-      Authorization: "E8FE49A8-5724-4DE5-B997-F6D79162EDDC"
-    },
-    datatype: "jsonp"
-    // crossorigin:true
   })
   .done(function(response) {
     console.log(response);
+    $("#codeLanding").html(response);
   });
 });
