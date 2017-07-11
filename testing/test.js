@@ -1,18 +1,41 @@
 // var apiKey = ;
 //HI!
 
-var VAqueryURL ="https://developer.nps.gov/api/v0/parks?parkCode=yell";
-$("#apiCall").on("click", function() {
+//var for zomato API
+var zoAPI = "394d1e7d79d05683913b696732d33f83";
+
+//cuisine search for locations
+var search = "tacos";
+
+//variables for longitude and longitude
+var lat = 0;
+var long = 0;
+
+//getting the response for zomato locations API
+var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "&count=15&radius=25%20mi";
+
   $.ajax({
-    url: VAqueryURL,
+    url: locationURL,
     method: "GET",
     headers:{
-      Authorization: "E8FE49A8-5724-4DE5-B997-F6D79162EDDC"
-    },
-    datatype: "jsonp"
-    // crossorigin:true
+      "user-key":zoAPI
+    }
   })
+  //after getting the response
   .done(function(response) {
     console.log(response);
+
+    //for each of the objects returned
+    for (var i =0; i < 15; i ++){
+
+      //get the lat and long coordinates
+      lat = response.restaurants[i].restaurant.location.latitude;
+      console.log("lat: " + lat);
+      long = response.restaurants[i].restaurant.location.longitude;
+      console.log("long: " + long);
+
+      //put it on the map
+
+    //
+  }
   });
-});
