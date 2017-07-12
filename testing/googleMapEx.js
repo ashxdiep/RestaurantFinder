@@ -19,4 +19,50 @@ function initMap() {
     position: uluruuu,
     map: map
   });
+
+  marker1.addListener('click', function() {
+    console.log("clicky click click");
+  });
+
+  ///////////////////////////////////////////////
+
+  var myLatLng = {lat: -26.363, lng: 133.044};
+
+  var map2 = new google.maps.Map(document.getElementById('map2'), {
+    zoom: 4,
+    center: myLatLng
+  });
+
+  var marker0 = new google.maps.Marker({
+    position: myLatLng,
+    map: map2,
+    title: 'Hello World!'
+  });
+
+  mapNo3();
+}
+
+
+
+function mapNo3() {
+  var theLatlng = new google.maps.LatLng(-24.363882,130.044922);
+  var mapOptions = {
+    zoom: 4,
+    center: theLatlng
+  }
+  var map3 = new google.maps.Map(document.getElementById("map3"), mapOptions);
+
+
+  var marker3 = new google.maps.Marker({
+      position: theLatlng,
+      label:"Hello World!",
+      clickable:true
+  });
+
+  marker3.setMap(map3);
+
+  $(marker3).on("click", function() {
+    console.log("marker was cliked!!!");
+  });
+
 }
