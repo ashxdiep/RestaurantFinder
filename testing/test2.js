@@ -1,10 +1,3 @@
-//var for zomato API
-var zoAPI = "394d1e7d79d05683913b696732d33f83";
-var search = "tacos";
-var lat = 0;
-var long = 0;
-var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "&count=15&radius=25%20mi";
-
 var testLatLong = {lat: -25.363, lng: 131.044};
 
 var latArray = [-25.363, -24.363, -26.363]
