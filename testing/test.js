@@ -125,22 +125,21 @@ document.on("click","#name", function(){
 
 
 
-//fucntion to put blank map on page upon load -AW
-function initMap() {
-  //show map with no pins -AW
-  var pageMap = new google.maps.Map(document.getElementById("mapWrapper"),{
-    zoom: 8 //don't forget the ',' after zoom -AW
-    //center: user's current location -AW
-  });
-  //map will of user's current location - AW
-}
-
-
-
 
 
 //================================[THE LINE]================================//
 
+//--------------------[variables]--------------------//
 
-//create a marker for each object returned
 var phiLambda = {lat: lat, lng: long};
+
+//--------------------[functions]--------------------//
+//shows map with no pins when page loads
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: testLatLong
+  });
+
+
+} //end of initMap
