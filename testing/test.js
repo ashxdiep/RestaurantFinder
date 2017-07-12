@@ -28,7 +28,7 @@ var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "
 // res_id variable for reviews ajax
 var resID = "";
 
-
+var markerHolder = {};
 
 $.ajax({
   url: locationURL,
@@ -52,8 +52,13 @@ $.ajax({
 
     //create a marker for each object returned -AW
     var phiLambda = {lat: lat, lng: long};
-    var marker = new google.maps.Marker({
-      position: phiLambda,
+    // var marker = new google.maps.Marker({
+    //   position: phiLambda,
+    //   map: pageMap
+    // });
+
+    markerHolder['marker' + i] = new google.maps.Marker({
+      position:phiLambda,
       map: pageMap
     });
 
@@ -145,6 +150,3 @@ function initMap() {
   });
   //map will of user's current location - AW
 }
-
-//listen for marker click
-$("#mapWrapper").on("click", )
