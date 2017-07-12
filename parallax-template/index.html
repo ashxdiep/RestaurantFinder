@@ -9,9 +9,13 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+<!-- Boostrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
+
 <body>
-  <nav class="white" role="navigation">
+<!-- Navigation bar -->
+  <!-- <nav class="white" role="navigation">
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">Restaurant Finder</a>
       <ul class="right hide-on-med-and-down">
@@ -23,7 +27,7 @@
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
-  </nav>
+  </nav> -->
 
   <div id="index-banner" class="parallax-container">
     <div class="section no-pad-bot">
@@ -31,10 +35,10 @@
         <br><br>
         <h1 class="header center teal-text text-lighten-2">Restaurant Finder</h1>
         <div class="row center">
-          <h5 class="header col s12 light">A website to help you find the best around you</h5>
+          <h2 class="header col s12 light">A website to help you find the best around you</h2>
         </div>
         <div class="row center">
-          <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Find Restaurant</a>
+          <a href="index.html#middlenav" id="download-button" class="btn-large waves-effect waves-light teal lighten-1">Find Restaurant</a>
         </div>
         <br><br>
 
@@ -43,16 +47,55 @@
     <div class="parallax"><img src="https://static1.squarespace.com/static/567b15979cadb6554da642d7/569ffe9305f8e24135a6f42e/569ffe9305f8e24135a6f42f/1453326002972/CAFE-EUGENE-886WEB.jpg?format=2500w" alt="Plates of food"></div>
   </div>
 
+<!-- search box -->
+<nav class="white" role="navigation">
+    <div class="nav-wrapper container" id = "middlenav">
+      <div class="col-lg-3">
+      </div>
+      <div class="col-lg-6">
+    <div class="input-group" align = "right">
+      <input type="search" id = "mysearch" style="font-size:18px" placeholder="Search for something...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-6 -->
+    </div>
+  </nav>
+  <!-- map -->
+  <!-- <div class="container">
+    <div class="section"> -->
+
+      <div class="container">
+        <div class="section">
+
+  <div class = "row">
+  <div class="parallax-container valign-wrapper" style="float: left">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Map PlaceHolder</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="http://www.mrpsocialstudies.com/uploads/2/6/3/6/26364497/8504630_orig.jpg" alt="Map"></div>
+  </div>
+</div>
+
 
   <div class="container">
     <div class="section">
+
+
+  <!-- <div class="container">
+    <div class="section"> -->
 
       <!--   Icon Section   -->
       <div class="row">
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Speeds up development</h5>
+            <h5 class="center">Menu</h5>
 
             <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
           </div>
@@ -61,7 +104,7 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center brown-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">User Experience Focused</h5>
+            <h5 class="center">Reviews</h5>
 
             <p class="light">By utilizing elements and principles of Material Design, we were able to create a framework that incorporates components and animations that provide more feedback to users. Additionally, a single underlying responsive system across all platforms allow for a more unified user experience.</p>
           </div>
@@ -81,19 +124,7 @@
   </div>
 
 
-  <div class="parallax-container valign-wrapper">
-    <div class="section no-pad-bot">
-      <div class="container">
-        <div class="row center">
-          <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
-        </div>
-      </div>
-    </div>
-    <div class="parallax"><img src="http://c8.alamy.com/comp/DB0NP4/outdoor-cafe-in-rue-de-seine-paris-france-DB0NP4.jpg"></div>
-  </div>
 
-  <div class="container">
-    <div class="section">
 
       <div class="row">
         <div class="col s12 center">
@@ -115,7 +146,7 @@
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="http://www.ipiin.storybird.us/list/316893/ce15c873c60ff643b1b6b870b51a7264.png" alt="Unsplashed background img 3"></div>
+    <div class="parallax"><img src="http://c8.alamy.com/comp/DB0NP4/outdoor-cafe-in-rue-de-seine-paris-france-DB0NP4.jpg" alt="Unsplashed background img 3"></div>
   </div>
 
   <footer class="page-footer teal">
@@ -149,7 +180,7 @@
     </div>
     <div class="footer-copyright">
       <div class="container">
-        © 2017 Copyright: Team Five</a>
+        <a>© 2017 Copyright: Team Five</a>
       </div>
     </div>
   </footer>
