@@ -30,8 +30,99 @@ var resID = "";
 
 
 
+$.ajax({
+  url: locationURL,
+  method: "GET",
+  headers:{
+    "user-key":zoAPI
+  }
+})
+//after getting the response
+.done(function(response) {
+  console.log(response);
+
+  //for each of the objects returned
+  for (var i =0; i < 15; i ++){
+
+    //get the lat and long coordinates -AW
+    lat = response.restaurants[i].restaurant.location.latitude;
+    console.log("lat: " + lat);
+    long = response.restaurants[i].restaurant.location.longitude;
+    console.log("long: " + long);
+
+    //create a marker for each object returned -AW
+    var phiLambda = {lat: lat, lng: long};
+    var marker = new google.maps.Marker({
+      position: phiLambda,
+      map: pageMap
+    });
+
+    //put it on the map
+
+
+    // get the variables for name, website, address, rating, curency, cuisine
+    name = response.restaurants[i].restaurant.name;
+    website = response.restaurants[i].restaurant.url;
+    address = response.restaurants[i].restaurant.location.address;
+    rating = parseInt(response.restaurants[i].restaurant.user_rating.aggregate_rating);
+    cuisine = response.restaurants[i].restaurant.cuisines;
+    currency = response.restaurants[i].restaurant.currency;
+    resID = response.restaurants[i].restaurant.id;
+
+    //push the name of restaurant to list of restaurants
+    listR.push(resID);
+
+    //make a div which appends to restaurants nearby
+    makeDivforNearbyR(name, website, address, rating, cuisine, currency);
+  }
+});
+
+//function for making div to append to restaurants nearby
+function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
+
+  //make a new div
+  var newdiv = $("<div class = 'option'> </div>");
+
+  //append number of stars for rating
+  var divforStars = drawStars(rating);
+
+  //append the name and currency next to it (name is clickable)
+  $(newdiv).append(currency);
+  var rname = $("<p id = 'name'></p>");
+  //set data-name to name
+  $(rname).attr("data-name", resID);
+  $(rname).html(name);
+  $(newdiv).append(rname);
+
+  //append website url (clickable)
+  $(newdiv).append("<p id = 'website'> Website: " + website + "</p>");
+
+  //append address
+  $(newdiv).append("<p> Address: " + address + "</p>");
+
+  //Clickable Directions
+  $(newdiv).append("<p id = 'directions'>Directions</p>");
+
+  //Cuisine type
+  $(newdiv).append("<p> Cuisines: " + cuisine + "</p>");
+
+  //Append to html
+
+}
+
+//whenever the name of place is clicked
+document.on("click","#name", function(){
+
+  //retrieve dataname value from whats clicked (This is the resID)
+  var restaurantName = $(this).attr("data-name");
+
+  //get ajax response of reviews for that restaurantName
+
+  //variable for reviewsURL
+  var reviewsURL = "https://developers.zomato.com/api/v2.1/reviews?res_id=" + resID + "&count=15";
+
   $.ajax({
-    url: locationURL,
+    url: reviewsURL,
     method: "GET",
     headers:{
       "user-key":zoAPI
@@ -39,103 +130,9 @@ var resID = "";
   })
   //after getting the response
   .done(function(response) {
-    console.log(response);
-
-    //for each of the objects returned
-    for (var i =0; i < 15; i ++){
-
-      //get the lat and long coordinates -AW
-      lat = response.restaurants[i].restaurant.location.latitude;
-      console.log("lat: " + lat);
-      long = response.restaurants[i].restaurant.location.longitude;
-      console.log("long: " + long);
-
-      //create a marker for each object returned -AW
-      var phiLambda = {lat: lat, lng: long};
-      var marker = new google.maps.Marker({
-        position: phiLambda,
-        map: pageMap
-      });
-
-      //put it on the map
-
-<<<<<<< HEAD
-      // get the variables for name, website, address, rating, curency, cuisine
-      name = response.restaurants[i].restaurant.name;
-      website = response.restaurants[i].restaurant.url;
-      address = response.restaurants[i].restaurant.location.address;
-      rating = parseInt(response.restaurants[i].restaurant.user_rating.aggregate_rating);
-      cuisine = response.restaurants[i].restaurant.cuisines;
-      currency = response.restaurants[i].restaurant.currency;
-      resID = response.restaurants[i].restaurant.id;
-
-      //push the name of restaurant to list of restaurants
-      listR.push(resID);
-
-      //make a div which appends to restaurants nearby
-      makeDivforNearbyR(name, website, address, rating, cuisine, currency);
-  }
-  });
-
-  //function for making div to append to restaurants nearby
-  function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
-
-    //make a new div
-    var newdiv = $("<div class = 'option'> </div>");
-
-    //append number of stars for rating
-    var divforStars = drawStars(rating);
-
-    //append the name and currency next to it (name is clickable)
-    $(newdiv).append(currency);
-    var rname = $("<p id = 'name'></p>");
-    //set data-name to name
-    $(rname).attr("data-name", resID);
-    $(rname).html(name);
-    $(newdiv).append(rname);
-
-    //append website url (clickable)
-    $(newdiv).append("<p id = 'website'> Website: " + website + "</p>");
-
-    //append address
-    $(newdiv).append("<p> Address: " + address + "</p>");
-
-    //Clickable Directions
-    $(newdiv).append("<p id = 'directions'>Directions</p>");
-
-    //Cuisine type
-    $(newdiv).append("<p> Cuisines: " + cuisine + "</p>");
-
-    //Append to html
-
-  }
-
-  //whenever the name of place is clicked
-  document.on("click","#name", function(){
-
-    //retrieve dataname value from whats clicked (This is the resID)
-    var restaurantName = $(this).attr("data-name");
-
-    //get ajax response of reviews for that restaurantName
-
-    //variable for reviewsURL
-    var reviewsURL = "https://developers.zomato.com/api/v2.1/reviews?res_id=" + resID + "&count=15";
-
-    $.ajax({
-      url: reviewsURL,
-      method: "GET",
-      headers:{
-        "user-key":zoAPI
-      }
-    })
-    //after getting the response
-    .done(function(response) {
 
   });
 });
-=======
-    }
-  });
 
 
 
@@ -151,4 +148,3 @@ function initMap() {
 
 //listen for marker click
 $("#mapWrapper").on("click", )
->>>>>>> 962aa43c8c3bd6e634f4c70464d34018892843a1
