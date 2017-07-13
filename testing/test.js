@@ -28,8 +28,6 @@ var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "
 // res_id variable for reviews ajax
 var resID = "";
 
-var markerHolder = {};
-
 $.ajax({
   url: locationURL,
   method: "GET",
@@ -49,20 +47,6 @@ $.ajax({
     console.log("lat: " + lat);
     long = response.restaurants[i].restaurant.location.longitude;
     console.log("long: " + long);
-
-    //create a marker for each object returned -AW
-    var phiLambda = {lat: lat, lng: long};
-    // var marker = new google.maps.Marker({
-    //   position: phiLambda,
-    //   map: pageMap
-    // });
-
-    markerHolder['marker' + i] = new google.maps.Marker({
-      position:phiLambda,
-      map: pageMap
-    });
-
-    //put it on the map
 
 
     // get the variables for name, website, address, rating, curency, cuisine
@@ -141,12 +125,21 @@ document.on("click","#name", function(){
 
 
 
-//fucntion to put blank map on page upon load -AW
+
+
+//================================[THE LINE]================================//
+
+//--------------------[variables]--------------------//
+
+var phiLambda = {lat: lat, lng: long};
+
+//--------------------[functions]--------------------//
+//shows map with no pins when page loads
 function initMap() {
-  //show map with no pins -AW
-  var pageMap = new google.maps.Map(document.getElementById("mapWrapper"),{
-    zoom: 8 //don't forget the ',' after zoom -AW
-    //center: user's current location -AW
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 7,
+    center: testLatLong
   });
-  //map will of user's current location - AW
-}
+
+
+} //end of initMap
