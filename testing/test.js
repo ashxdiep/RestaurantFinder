@@ -1,11 +1,14 @@
 // var apiKey = ;
 //HI!
-console.log("i'm in!");
+
 //var for zomato API
 var zoAPI = "394d1e7d79d05683913b696732d33f83";
 
 //cuisine search for locations
-var search = "";
+
+
+var search = "tacos";
+
 
 //variables for longitude and longitude
 var lat = 0;
@@ -24,81 +27,57 @@ var rating = 0;
 var cuisine = "";
 var currency = "";
 
-//variables for reviews ajax (get person name, date, avatar thumbnail, rating, and the review)\
-var reviewer = "";
-var reviewDate = "";
-var thumbnail = "<img class = 'avatar'></img>";
-var reviewRating = 0;
-var rdescription = "";
-
-
-
 //getting the response for zomato locations API
-var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "&count=15";
+var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "&count=15&radius=25%20mi";
 // res_id variable for reviews ajax
 var resID = "";
 
+$.ajax({
+  url: locationURL,
+  method: "GET",
+  headers:{
+    "user-key":zoAPI
+  }
+})
+//after getting the response
+.done(function(response) {
+  console.log(response);
+
+  //for each of the objects returned
+  for (var i =0; i < 15; i ++){
+
+    //get the lat and long coordinates -AW
+    lat = response.restaurants[i].restaurant.location.latitude;
+    console.log("lat: " + lat);
+    long = response.restaurants[i].restaurant.location.longitude;
+    console.log("long: " + long);
 
 
-  $.ajax({
-    url: locationURL,
-    method: "GET",
-    headers:{
-      "user-key":zoAPI
-    }
-  })
-  //after getting the response
-  .done(function(response) {
-    console.log(response);
+    // get the variables for name, website, address, rating, curency, cuisine
+    name = response.restaurants[i].restaurant.name;
+    website = response.restaurants[i].restaurant.url;
+    address = response.restaurants[i].restaurant.location.address;
+    rating = parseInt(response.restaurants[i].restaurant.user_rating.aggregate_rating);
+    cuisine = response.restaurants[i].restaurant.cuisines;
+    currency = response.restaurants[i].restaurant.currency;
+    resID = response.restaurants[i].restaurant.id;
 
-    //for each of the objects returned
-    for (var i =0; i < 15; i ++){
+    //push the name of restaurant to list of restaurants
+    listR.push(resID);
 
-      //get the lat and long coordinates -AW
-      lat = response.restaurants[i].restaurant.location.latitude;
-      console.log("lat: " + lat);
-      long = response.restaurants[i].restaurant.location.longitude;
-      console.log("long: " + long);
-
-      //create a marker for each object returned -AW
-      // var phiLambda = {lat: lat, lng: long};
-      // var marker = new google.maps.Marker({
-      //   position: phiLambda,
-      //   map: pageMap
-      // });
-
-      //put it on the map
-
-
-      // get the variables for name, website, address, rating, curency, cuisine (this is for the restaurant location ajax)
-      name = response.restaurants[i].restaurant.name;
-      website = response.restaurants[i].restaurant.url;
-      address = response.restaurants[i].restaurant.location.address;
-      rating = parseInt(response.restaurants[i].restaurant.user_rating.aggregate_rating);
-      cuisine = response.restaurants[i].restaurant.cuisines;
-      currency = response.restaurants[i].restaurant.currency;
-      resID = response.restaurants[i].restaurant.R.res_id;
-
-
-
-      //push the name of restaurant to list of restaurants
-      listR.push(resID);
-
-      //make a div which appends to restaurants nearby
-      makeDivforNearbyR(resID, name, website, address, rating, cuisine, currency);
+    //make a div which appends to restaurants nearby
+    makeDivforNearbyR(name, website, address, rating, cuisine, currency);
   }
 });
 
+//function for making div to append to restaurants nearby
+function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
 
-  //function for making div to append to restaurants nearby
-  function makeDivforNearbyR(resID, name, website, address, rating, cuisine, currency){
+  //make a new div
+  var newdiv = $("<div class = 'option'> </div>");
 
-    //make a new div
-    var newdiv = $("<div class = 'optiondiv'> </div>");
-
-    //append number of stars for rating
-    var divforStars = drawStars(rating);
-    $(newdiv).append(divforStars);
+  //append number of stars for rating
+  var divforStars = drawStars(rating);
 
   //append the name and currency next to it (name is clickable)
   $(newdiv).append(currency);
