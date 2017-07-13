@@ -1,6 +1,7 @@
 //-------------------[put empty map on page upon load]-------------------//
 var testLatLong = {lat: 30.2471972222, lng: -97.750725}; //Austin, TX
 
+//creates blank map
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
@@ -30,8 +31,8 @@ var testURL = "https://developers.zomato.com/api/v2.1/search?entity_id=278&entit
 //NOTE: I feel that due to the limiations of zomato, it might be easier if the user can only put in a zip code and select a cuisine from a dropdown menue.  Then the only ajax call (other then the one like the example below) would have to be the one that returns a location ID based on the zip code searched for.
 
 //lat & long variables
-var latitude
-var longitude
+var latitude;
+var longitude;
 
 //listens for markers to be clicked
 function markerClick(marker) {
@@ -55,17 +56,17 @@ $("#testBtn").on("click", function () {
   .done(function(response) {
     console.log(response);
 
-    var map = new google.maps.Map(document.getElementById('map'), {
+    var map2 = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,//zoom set to 12 so all markers are seen at once
       center: testLatLong
     });
 
     //for each of the objects returned
-    for (var i =0; i < 3; i ++){
+    for (var m =0; m < response.restaurants.length; m ++){
 
-      latitude = response.restaurants[i].restaurant.location.latitude;
+      latitude = response.restaurants[m].restaurant.location.latitude;
       latitude = parseFloat(latitude);
-      longitude = response.restaurants[i].restaurant.location.longitude;
+      longitude = response.restaurants[m].restaurant.location.longitude;
       longitude = parseFloat(longitude);
       console.log(latitude);
       console.log(longitude);
@@ -77,7 +78,7 @@ $("#testBtn").on("click", function () {
 
       var marker = new google.maps.Marker({
         position: phiLambda,
-        map: map
+        map: map2
       });
       markerClick(marker);
     }

@@ -6,13 +6,15 @@ var zoAPI = "394d1e7d79d05683913b696732d33f83";
 
 //cuisine search for locations
 
+var search;
 
-var search = "tacos";
-
-
-//variables for longitude and longitude
-var lat = 0;
-var long = 0;
+//lat & long variables
+var latitude;
+var longitude;
+var testLatLong = {
+  lat: 30.2672,
+  lng: -97.7421
+};
 
 //array for list of restaurants, and list of reviews
 var listR = [];
@@ -27,51 +29,97 @@ var rating = 0;
 var cuisine = "";
 var currency = "";
 
-//getting the response for zomato locations API
-var locationURL ="https://developers.zomato.com/api/v2.1/search?q=" + search + "&count=15&radius=25%20mi";
+//creates blank map
+function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 14,
+    center: testLatLong
+  });
+} //-end of initMap-""
+
+
 // res_id variable for reviews ajax
 var resID = "";
 
-$.ajax({
-  url: locationURL,
-  method: "GET",
-  headers:{
-    "user-key":zoAPI
-  }
-})
-//after getting the response
-.done(function(response) {
-  console.log(response);
 
-  //for each of the objects returned
-  for (var i =0; i < 15; i ++){
-
-    //get the lat and long coordinates -AW
-    lat = response.restaurants[i].restaurant.location.latitude;
-    console.log("lat: " + lat);
-    long = response.restaurants[i].restaurant.location.longitude;
-    console.log("long: " + long);
+//whenever the search bar is clicked
+$(document).on("click","#searchbtn", function(){
 
 
-    // get the variables for name, website, address, rating, curency, cuisine
-    name = response.restaurants[i].restaurant.name;
-    website = response.restaurants[i].restaurant.url;
-    address = response.restaurants[i].restaurant.location.address;
-    rating = parseInt(response.restaurants[i].restaurant.user_rating.aggregate_rating);
-    cuisine = response.restaurants[i].restaurant.cuisines;
-    currency = response.restaurants[i].restaurant.currency;
-    resID = response.restaurants[i].restaurant.id;
+  //get the input value and store it as the search variable
+  search = "";
+  search = $("#mysearch").val().trim();
 
-    //push the name of restaurant to list of restaurants
-    listR.push(resID);
+//getting the response for zomato locations API
+var locationURL ="https://developers.zomato.com/api/v2.1/search?entity_id=278&entity_type=city&q=" + search;
 
-    //make a div which appends to restaurants nearby
-    makeDivforNearbyR(name, website, address, rating, cuisine, currency);
-  }
+  console.log("The input: " + search);
+  console.log("url: " + locationURL);
+  //get ajax for the options of restaurants
+  $.ajax({
+    url: locationURL,
+    method: "GET",
+    headers:{
+      "user-key": zoAPI
+    }
+  })
+  //after getting the response
+  .done(function(response) {
+    console.log(response);
+
+    //where it centers
+    var map2 = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,//zoom set to 12 so all markers are seen at once
+      center: testLatLong
+    });
+
+    //for each of the objects returned
+    for (var i =0; i < response.restaurants.length; i ++){
+
+
+      // get the variables for name, website, address, rating, curency, cuisine
+      name = response.restaurants[i].restaurant.name;
+      website = response.restaurants[i].restaurant.url;
+      address = response.restaurants[i].restaurant.location.address;
+      rating = parseInt(response.restaurants[i].restaurant.user_rating.aggregate_rating);
+      cuisine = response.restaurants[i].restaurant.cuisines;
+      currency = response.restaurants[i].restaurant.currency;
+      resID = response.restaurants[i].restaurant.id;
+
+      //push the name of restaurant to list of restaurants
+      listR.push(resID);
+
+      //make a div which appends to restaurants nearby
+      makeDivforNearbyR(resID, name, website, address, rating, cuisine, currency);
+
+
+      latitude = response.restaurants[i].restaurant.location.latitude;
+      latitude = parseFloat(latitude);
+      longitude = response.restaurants[i].restaurant.location.longitude;
+      longitude = parseFloat(longitude);
+      console.log(latitude);
+      console.log(longitude);
+      console.log("SEPERATOR");
+
+
+      //create a marker for each object returned
+      var phiLambda = {lat: latitude, lng: longitude};
+
+      var marker = new google.maps.Marker({
+        position: phiLambda,
+        map: map2
+      });
+      console.log("made a new marker");
+      markerClick(marker);
+    }
+
+
+  });
 });
 
+
 //function for making div to append to restaurants nearby
-function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
+function makeDivforNearbyR( resID, name, website, address, rating, cuisine, currency){
 
   //make a new div
   var newdiv = $("<div class = 'option'> </div>");
@@ -81,6 +129,7 @@ function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
 
   //append the name and currency next to it (name is clickable)
   $(newdiv).append(currency);
+
   var rname = $("<p id = 'name'></p>");
   //set data-name to name
   $(rname).attr("data-name", resID);
@@ -100,7 +149,7 @@ function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
   $(newdiv).append("<p> Cuisines: " + cuisine + "</p>");
 
     //Append to html
-    $("#hello").append(newdiv);
+    $(".light1").append(newdiv);
   }
 
   //whenever the name of place is clicked
@@ -113,7 +162,7 @@ function makeDivforNearbyR(name, website, address, rating, cuisine, currency){
 
 
     //variable for reviewsURL
-    var reviewsURL = "https://developers.zomato.com/api/v2.1/reviews?res_id=" + resID + "&count=20";
+    var reviewsURL = "https://developers.zomato.com/api/v2.1/reviews?res_id=" + restaurantName + "&count=20";
 
     $.ajax({
       url: reviewsURL,
@@ -219,5 +268,12 @@ function makeDivforReviewers(reviewer, reviewDate, reviewRating, rdescription){
   $(div2).append(reviewDate);
 
   //append div2 to document
-  $("#lol").append(div2);
+  $("#light3").append(div2);
+}
+
+//listens for markers to be clicked
+function markerClick(marker) {
+  marker.addListener("click", function() {
+    alert("marker!");
+  });
 }

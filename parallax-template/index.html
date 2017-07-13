@@ -11,6 +11,11 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 <!-- Boostrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Google map api script  -->
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBEylmL-dj2EJ784FZAvrx677Y3Be19sg&callback=initMap"
+  type="text/javascript"></script>
+
 </head>
 
 <body>
@@ -56,7 +61,7 @@
     <div class="input-group" align = "right">
       <input type="search" id = "mysearch" style="font-size:18px" placeholder="Search for something...">
       <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
+        <button class="btn btn-default" id= "searchbtn" type="button">Go!</button>
       </span>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-6 -->
@@ -73,12 +78,13 @@
   <div class="parallax-container valign-wrapper" style="float: left">
     <div class="section no-pad-bot">
       <div class="container">
-        <div class="row center">
+        <div class="row center" id = "map" style = " height: 400px; width: 100%;">
           <h5 class="header col s12 light">Map PlaceHolder</h5>
         </div>
       </div>
     </div>
-    <div class="parallax"><img src="http://www.mrpsocialstudies.com/uploads/2/6/3/6/26364497/8504630_orig.jpg" alt="Map"></div>
+    <div class="parallax" ></div>
+    <button id = "mapbutton"> click button </button>
   </div>
 </div>
 
@@ -95,9 +101,9 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center brown-text"><i class="material-icons">flash_on</i></h2>
-            <h5 class="center">Menu</h5>
+            <h5 class="center">Restaurants Nearby</h5>
 
-            <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate our custom components. Additionally, we refined animations and transitions to provide a smoother experience for developers.</p>
+            <div class="light1"></div>
           </div>
         </div>
 
@@ -113,9 +119,9 @@
         <div class="col s12 m4">
           <div class="icon-block">
             <h2 class="center brown-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to work with</h5>
+            <h5 class="center">Reviews</h5>
 
-            <p class="light">We have provided detailed documentation as well as specific code examples to help new users get started. We are also always open to feedback and can answer any questions a user may have about Materialize.</p>
+            <div class="light3"></div>
           </div>
         </div>
       </div>
